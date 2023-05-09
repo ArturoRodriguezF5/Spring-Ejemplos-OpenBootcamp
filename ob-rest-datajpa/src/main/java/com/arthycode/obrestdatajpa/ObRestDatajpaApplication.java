@@ -1,5 +1,7 @@
 package com.arthycode.obrestdatajpa;
 
+import com.arthycode.obrestdatajpa.entities.Book;
+import com.arthycode.obrestdatajpa.repository.BookRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -27,7 +29,7 @@ public class ObRestDatajpaApplication {
 		System.out.println(repo.findAll());
 		System.out.println("Hay: " + repo.count() + " libros en el repo.");
 		// Borrar un libro
-		repo.deleteById(1L);
+		//repo.deleteById(1L);
 		System.out.println(repo.findAll());
 	}
 

@@ -1,4 +1,4 @@
-package com.arthycode.obrestdatajpa;
+package com.arthycode.obrestdatajpa.entities;
 
 import jakarta.persistence.*;
 
