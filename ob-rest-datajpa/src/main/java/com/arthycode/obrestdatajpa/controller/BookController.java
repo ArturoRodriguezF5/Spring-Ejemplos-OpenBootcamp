@@ -2,6 +2,8 @@ package com.arthycode.obrestdatajpa.controller;
 
 import com.arthycode.obrestdatajpa.entities.Book;
 import com.arthycode.obrestdatajpa.repository.BookRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,7 @@ import java.util.Optional;
 public class BookController {
 
     // Atributos encapsulados
+    private final Logger log = LoggerFactory.getLogger(BookController.class);
     private BookRepository bookRepository;
     // Constructores
 
@@ -55,13 +58,45 @@ public class BookController {
 
     // Agregar un libro a base de datos
     @PostMapping("/api/books")
-    public Book create(@RequestBody Book book) {
-        // Guardar el libro en la base de datos
-        return bookRepository.save(book);
+    public ResponseEntity<Book> create(@RequestBody Book book) {
+        if (book.getId() != null) {
+            log.warn("Book already exists");
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(bookRepository.save(book));
     }
 
     // Actualizar un libro existente en base de datos
+    @PutMapping("/api/books")
+    public ResponseEntity<Book> update(@RequestBody Book book) {
+        if (book.getId() == null) {
+            log.warn("Trying to update a non existent book");
+            return ResponseEntity.badRequest().build();
+        }
+        if (!bookRepository.existsById(book.getId())) {
+            log.warn("Trying to update a non existent book");
+            return ResponseEntity.notFound().build();
+        }
 
+        return ResponseEntity.ok(bookRepository.save(book));
+    }
     // Borrar un libro en base de datos
+    @DeleteMapping("/api/books/{id}")
+    public ResponseEntity<Book> delete(@PathVariable Long id) {
+        if (bookRepository.existsById(id)) {
+            bookRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 
+    // Borrar todos los libros de la base de datos
+    @DeleteMapping("/api/books")
+    public ResponseEntity<Book> deleteAll() {
+        if (bookRepository.count() != 0) {
+            bookRepository.deleteAll();
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 }
