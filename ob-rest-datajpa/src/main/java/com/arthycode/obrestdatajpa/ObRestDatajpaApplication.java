@@ -32,5 +32,4 @@ public class ObRestDatajpaApplication {
 		//repo.deleteById(1L);
 		System.out.println(repo.findAll());
 	}
-
 }
