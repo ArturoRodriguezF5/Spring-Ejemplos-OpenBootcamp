@@ -2,15 +2,12 @@ package com.arthycode.obrestdatajpa.controller;
 
 import com.arthycode.obrestdatajpa.entities.Book;
 import com.arthycode.obrestdatajpa.repository.BookRepository;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Optional;
